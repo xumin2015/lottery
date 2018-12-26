@@ -1,0 +1,75 @@
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title></title>
+  <style>
+    .operate{
+      display: flex;
+      justify-content: space-around
+    }
+    .operate div{
+      padding:10px 10px;
+      background-color: lime;
+      border-radius: 5px;
+      color:white;
+      font-size: 18px;
+      cursor:pointer;
+      margin-top: 50px
+    }
+  </style>
+
+</head>
+<body style="background-image: url(./image/fengmianbg.png)">
+  <div style="text-align: center;color:#ffffff;font-size: 50px;margin-top: 50px">
+    ¥<span id="totalMoney"></span>
+  </div>
+
+  <div style="margin-top: 50px;text-align: center;color:#ffffff;font-size: 40px;display: flex;align-items: center;justify-content: center">
+    中奖金额：<input max="10" oninput="inputchange(value)" onchange="inputchange(value)" id="inputnum" style="height:30px;border-radius: 5px" type="number">
+  </div>
+  <div  style="text-align: center;color:#ffffff;font-size: 40px;margin-top: 50px">
+    姓名：<span id="person"></span>
+  </div>
+<div  class="operate">
+  <div onclick="star()">
+    START
+  </div>
+  <div onclick="end()">
+    STOP
+  </div>
+</div>
+</body>
+<script>
+    var totalMoney=10000;
+    var personArray=['张三','李四','王五','赵六','刘八','宋九'];
+    var inputvalue=0;
+    var intervalmark=null;
+    document.getElementById('totalMoney').innerText=totalMoney;
+    var inputchange=function(value){
+        if(value>totalMoney)
+        document.getElementById('inputnum').value=inputvalue;
+        else{
+            inputvalue= value;
+            var totalMoney2=totalMoney-value;
+            document.getElementById('totalMoney').innerText=totalMoney2;
+        }
+    }
+    var star=function(){
+        if( !document.getElementById('inputnum').value){
+            alert('请输入中奖金额！')
+            return false;
+        }
+        intervalmark=setInterval(()=>{
+            document.getElementById('person').innerText=personArray[Math.floor(Math.random()*personArray.length)];
+        },50);
+    }
+    var end=function(){
+     if(intervalmark){
+         clearInterval(intervalmark);
+         alert('恭喜'+document.getElementById('person').innerText+'喜中¥'+document.getElementById('inputnum').value);
+         totalMoney=totalMoney-document.getElementById('inputnum').value;
+         document.getElementById('inputnum').value='';
+     }
+    }
+</script>
+</html>
